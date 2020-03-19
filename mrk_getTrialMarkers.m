@@ -30,17 +30,35 @@ while idx<length(mrk.time)
 end
 
 if nargin>1
+    if ischar(must_contain)
+        must_contain = {must_contain};
+    end;
     trial_mrk = select_trials(trial_mrk,mrk,must_contain);
 end
 
 
 function trial = select_trials(trial,mrk,must_contain)
 
+Nc = length(must_contain);
+not_mode = zeros(Nc,1);
+for kk = 1:Nc
+    if strcmp(must_contain{kk}(1),'~')
+        must_contain{kk}(1) = [];
+        not_mode(kk) = 1;
+    end    
+end
 Nt = length(trial);
 keep = [];
 for jj = 1:Nt
     mrk2 = mrk_selectEvents(mrk,trial{jj});
-    if ismember(must_contain,mrk2.className)
+    conform = zeros(Nc,1);
+    for kk = 1:Nc
+        conform(kk) = ismember(must_contain{kk},mrk2.className);
+        if not_mode(kk)
+            conform(kk) = ~conform(kk);
+        end
+    end
+    if all(conform)
         keep = [keep jj];
     end
 end
