@@ -8,7 +8,7 @@ if nargin==2
 end
 
 ds_list = dir(BTB.RawDir);
-ds_idx = strncmp(subj_code,{ds_list.name},5);
+ds_idx = strncmp(subj_code,{ds_list.name},6);
 ds_name = ds_list(ds_idx).name;
 filename = fullfile(ds_name,sprintf('%s_%s_%s',opt.session_name,phase_name,subj_code));
 

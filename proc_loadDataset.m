@@ -22,7 +22,7 @@ if iscell(phase_name)
 end
 
 ds_list = dir(BTB.MatDir);
-ds_idx = strncmp(subj_code,{ds_list.name},5);
+ds_idx = strncmp(subj_code,{ds_list.name},6);
 ds_name = ds_list(ds_idx).name;
 
 filename_eeg = sprintf('%s_%s_%s',opt.session_name,phase_name,subj_code);
