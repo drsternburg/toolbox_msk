@@ -11,6 +11,7 @@ ci_te = find(strcmp(mrk.className,'trial end'));
 idx = 1;
 trial_mrk = [];
 n_trial = 0;
+broken_last_trial = false;
 while idx<length(mrk.time)
     if find(mrk.y(:,idx))==ci_ts
         event_idx = [];
@@ -20,11 +21,18 @@ while idx<length(mrk.time)
             class_idx = [class_idx find(mrk.y(:,idx))];
             if find(mrk.y(:,idx))==ci_te
                 break
+            elseif idx==length(mrk.time)
+                broken_last_trial = true;
+                break
             end
             idx = idx+1;
         end
-        n_trial = n_trial+1;
-        trial_mrk{n_trial} = event_idx;
+        if not(broken_last_trial)
+            n_trial = n_trial+1;
+            trial_mrk{n_trial} = event_idx;
+        else
+            break
+        end
     end
     idx = idx+1;
 end

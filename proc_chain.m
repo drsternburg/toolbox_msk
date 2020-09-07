@@ -7,7 +7,7 @@ end
 for k= 1:length(proc)
   procline= proc{k};
   isvar= cellfun(@ischar, procline);
-  nVars= min(find(~isvar))-1;
+  nVars= find(~isvar,1)-1;
   vars= procline(1:nVars);
   vals= cell(1, nVars);
   cmd= replace_vars(procline(nVars+1:end), memo);

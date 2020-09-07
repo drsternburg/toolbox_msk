@@ -8,12 +8,18 @@ if nargin==2
 end
 
 [cnt,mrk_orig] = proc_loadDataset(subj_code,phase_name);
-mrk_orig = mrk_selectClasses(mrk_orig,'not','movement onset');
-must_contain = 'pedal press';
-trial = mrk_getTrialMarkers(mrk_orig,must_contain);
-mrk_orig = mrk_selectEvents(mrk_orig,[trial{:}]);
 
-mrk = mrk_selectClasses(mrk_orig,{'trial start','pedal press'});
+% mrk_orig = mrk_selectClasses(mrk_orig,'not','movement onset');
+% must_contain = 'pedal press';
+% trial = mrk_getTrialMarkers(mrk_orig,must_contain);
+% mrk_orig = mrk_selectEvents(mrk_orig,[trial{:}]);
+% mrk = mrk_selectClasses(mrk_orig,{'trial start','pedal press'});
+
+mrk = mrk_selectClasses(mrk_orig,'not','movement onset');
+must_contain = 'pedal press';
+trial = mrk_getTrialMarkers(mrk,must_contain);
+mrk = mrk_selectEvents(mrk_orig,[trial{:}]);
+mrk = mrk_selectClasses(mrk,{'trial start','pedal press'});
 
 cnt = proc_selectChannels(cnt,'Acc*');
 dt = 1000/cnt.fs;

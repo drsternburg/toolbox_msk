@@ -11,7 +11,7 @@ for si = 1:Ns
     for pi = 1:Np
         ind1 = T.Subj==si;
         x = T.(P{pi})(ind1);
-        ind2 = (x>mean(x)+std(x)*2.5)|(x<mean(x)-std(x)*2.5);
+        ind2 = (x>mean(x)+std(x)*5)|(x<mean(x)-std(x)*5);
         if verbose
             fprintf('Subj:%d,Pred:%s,Excluded=%d\n',si,P{pi},sum(ind2))
         end
