@@ -21,7 +21,7 @@ trial = mrk_getTrialMarkers(mrk,must_contain);
 mrk = mrk_selectEvents(mrk_orig,[trial{:}]);
 mrk = mrk_selectClasses(mrk,{'trial start','pedal press'});
 
-cnt = proc_selectChannels(cnt,'Acc*');
+cnt = proc_selectChannels(cnt,'M*');
 dt = 1000/cnt.fs;
 
 %% train online detector
@@ -119,7 +119,7 @@ end
 
 %% save new marker struct
 ds_list = dir(BTB.MatDir);
-ds_idx = strncmp(subj_code,{ds_list.name},5);
+ds_idx = strncmp(subj_code,{ds_list.name},6);
 ds_name = ds_list(ds_idx).name;
 filename = fullfile(ds_name,sprintf('%s_%s_%s',opt.session_name,phase_name,subj_code));
 filename = fullfile(BTB.MatDir,[filename '_mrk']);

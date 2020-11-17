@@ -3,8 +3,12 @@ function [cnt,mrk,mnt] = proc_loadDataset(subj_code,phase_name,session_name)
 
 global BTB opt
 
-if isfield(opt,'session_name')
-    session_name = opt.session_name;
+if ~exist('session_name','var')
+    if isfield(opt,'session_name')
+        session_name = opt.session_name;
+    else
+        error('Session name undefined.')
+    end
 end
 
 if iscell(phase_name)
@@ -50,3 +54,6 @@ end
 
 mnt.scale_box = [];
 mnt = mnt_scalpToGrid(mnt);
+
+
+

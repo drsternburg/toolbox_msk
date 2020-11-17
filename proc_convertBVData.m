@@ -1,10 +1,14 @@
 
-function [cnt,mrk,mnt] = proc_convertBVData(subj_code,phase_name,do_car)
+function [cnt,mrk,mnt] = proc_convertBVData(subj_code,phase_name,do_car,excl_badchans)
 
 global opt BTB
 
-if nargin==2
+if ~exist('do_car','var')
     do_car = true;
+end
+
+if ~exist('excl_badchans','var')
+    excl_badchans = false;
 end
 
 ds_list = dir(BTB.RawDir);
@@ -12,13 +16,16 @@ ds_idx = strncmp(subj_code,{ds_list.name},6);
 ds_name = ds_list(ds_idx).name;
 filename = fullfile(ds_name,sprintf('%s_%s_%s',opt.session_name,phase_name,subj_code));
 
-% hdr = file_readBVheader(filename);
-% if isfield(hdr,'impedances')
-%     noninfclab = ['not' hdr.clab(isinf(hdr.impedances))];
-% else
-%     noninfclab = '*';
-% end
-noninfclab = '*';
+if excl_badchans
+    hdr = file_readBVheader(filename);
+    if isfield(hdr,'impedances')
+        noninfclab = ['not' hdr.clab(isinf(hdr.impedances))];
+    else
+        noninfclab = '*';
+    end
+else
+    noninfclab = '*';
+end
 
 % read raw data
 [cnt,mrk] = file_readBV(filename,'fs',opt.acq.fs,'filt',opt.acq.filt,'clab',noninfclab);
